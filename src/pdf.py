@@ -21,14 +21,6 @@ def _open(pdf_path: Path):
     return pdfium.PdfDocument(str(pdf_path))
 
 
-def page_count(pdf_path: Path) -> int:
-    doc = _open(pdf_path)
-    try:
-        return len(doc)
-    finally:
-        doc.close()
-
-
 def to_images(pdf_path: Path, start_page: int, num_pages: int = 1) -> list[Path]:
     """PDF → PNG (1-based page). DPI ~200, autocontrast."""
     from PIL import ImageEnhance, ImageOps
@@ -101,13 +93,3 @@ def find_page_for_date(pdf_path: Path, month: int, day: int) -> tuple[int | None
     title = f"Ngày {day} tháng {month}"
     pages = build_date_map(pdf_path)
     return pages.get(key), title
-
-
-def page_title(pdf_path: Path, page: int) -> str | None:
-    doc = _open(pdf_path)
-    try:
-        text = doc[page - 1].get_textpage().get_text_bounded() or ""
-    finally:
-        doc.close()
-    m = _DATE_RE.search(text)
-    return m.group(0) if m else None
