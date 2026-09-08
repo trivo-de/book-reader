@@ -1,0 +1,14 @@
+.git
+.venv
+venv
+__pycache__
+*.pyc
+.env
+output
+books/*.pdf
+data/credentials.json
+data/token.json
+data/state.json
+data/date_map.json
+*.md
+LICENSE

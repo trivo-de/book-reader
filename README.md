@@ -31,35 +31,64 @@ PDF (title "Ngày D tháng M")
 
 ```
 book-reader/
-├── app.py                 # Entry point
+├── app.py
+├── Dockerfile
+├── docker-compose.yml
+├── install.sh             # cài 1 lệnh (cần Docker)
 ├── requirements.txt
-├── .env.example           # Mẫu biến môi trường
+├── .env.example
 ├── .gitignore
 ├── books/                 # Đặt PDF của bạn vào đây (không commit)
 ├── data/
 │   ├── credentials.example.json
 │   ├── credentials.json   # gitignored
 │   └── token.json         # gitignored
-├── output/                # ảnh tạm (gitignored)
+├── output/
 ├── scripts/
-│   └── generate_token.py  # OAuth Google Drive
+│   └── generate_token.py
 └── src/
-    ├── app.py             # run_send + scheduler
+    ├── app.py
     ├── config.py
-    ├── pdf.py             # render + date map
+    ├── pdf.py
     ├── gdrive.py
     ├── zalo.py
     └── state.py
 ```
 
-## Yêu cầu
+## Cách nhanh nhất (Docker)
 
-- Python 3.10+
-- Tài khoản Google Cloud (OAuth Desktop) để upload Drive
-- Zalo Bot API (`sendMessage` / `sendPhoto`)
-- PDF có title dạng `Ngày D tháng M` trên mỗi trang ngày
+Cần sẵn Docker + Docker Compose.
 
-## Cài đặt
+```bash
+git clone https://github.com/trivo-de/book-reader.git
+cd book-reader
+
+cp .env.example .env
+# sửa .env: ZALO_URL, ZALO_PHOTO_URL, ZALO_CHAT_ID, GDRIVE_FOLDER_ID
+
+cp data/credentials.example.json data/credentials.json
+# dán OAuth Desktop credentials từ Google Cloud vào file trên
+
+# Tạo token lần đầu (máy có trình duyệt + Python):
+pip install -r requirements.txt
+python scripts/generate_token.py
+
+# Thêm PDF
+cp /path/to/book.pdf books/
+
+chmod +x install.sh
+./install.sh
+```
+
+Lệnh hữu ích:
+
+```bash
+docker compose logs -f
+docker compose exec book-reader python app.py today force
+docker compose down
+```
+
+## Cài bằng Python (không Docker)
 
 ```bash
 git clone https://github.com/trivo-de/book-reader.git
@@ -112,7 +141,7 @@ books/Your-Book.pdf
 
 > PDF bản quyền **không** được đưa lên repo. Mỗi người tự thêm sách của mình.
 
-## Chạy
+## Chạy (Python)
 
 ```bash
 python app.py today        # gửi trang hôm nay

@@ -1,0 +1,17 @@
+services:
+  book-reader:
+    build: .
+    container_name: book-reader
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATA_DIR: /app
+      TZ: Asia/Ho_Chi_Minh
+    volumes:
+      # PDF sách (đặt file vào ./books trên máy host)
+      - ./books:/app/books
+      # credentials.json, token.json, state.json
+      - ./data:/app/data
+      # ảnh tạm
+      - ./output:/app/output
