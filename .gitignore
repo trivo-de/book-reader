@@ -1,0 +1,57 @@
+# Secrets & credentials — NEVER commit
+.env
+.env.*
+!.env.example
+
+# Google OAuth / tokens
+data/credentials.json
+data/token.json
+**/credentials.json
+**/token.json
+**/client_secret*.json
+*.pem
+*.key
+
+# Local runtime state
+data/state.json
+data/date_map.json
+data/*.json
+!data/.gitkeep
+!data/credentials.example.json
+
+# Books (add your own PDF locally; do not publish copyrighted files)
+books/*
+!books/.gitkeep
+
+# Generated images
+output/
+*.png
+*.jpg
+*.jpeg
+
+# Python
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Misc
+config.yaml
+*.log
